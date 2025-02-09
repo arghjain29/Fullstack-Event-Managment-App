@@ -1,23 +1,71 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
-    <div className="text-center py-20">
-      <h1 className="text-5xl font-bold text-blue-800 mb-6">Welcome to the Event Management Platform!</h1>
-      <p className="text-xl text-gray-700 mb-8">
-        Create, manage, and view events easily. Join our community and never miss an event again!
-      </p>
-      <div className="space-x-4">
-        <Link to="/dashboard" className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700">
-          View Events
-        </Link>
-        <Link to="/login" className="bg-gray-600 text-white px-6 py-3 rounded-md hover:bg-gray-700">
-          Login
-        </Link>
-        <Link to="/register" className="bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700">
-          Register
-        </Link>
+    <div className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden">
+      {/* Background image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/comp.jpg?height=1080&width=1920"
+          alt="Background"
+          className="w-full h-full object-cover opacity-60"
+        />
       </div>
+
+      {/* Content */}
+      <div
+        className="z-10 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto 
+            bg-white/10 backdrop-blur-lg rounded-2xl p-8 sm:p-12 
+            shadow-lg border border-white/20 transition-all duration-300 ease-in-out"
+      >
+        <h1
+          className="text-7xl sm:text-7xl font-extrabold text-blue-900 mb-6 
+              transition-all duration-300 ease-in-out transform hover:scale-105"
+        >
+          Welcome to EventPro
+        </h1>
+
+        <p
+          className="text-2xl sm:text-2xl text-gray-800 mb-12 
+              transition-all duration-300 ease-in-out transform hover:scale-105"
+        >
+          Create, Manage, and Experience unforgettable events. <br /> Join our
+          community and make every moment count!
+        </p>
+
+        <div
+          className="flex flex-col sm:flex-row justify-center items-center 
+                space-y-4 sm:space-y-0 sm:space-x-6"
+        >
+          <Link
+            to="/dashboard"
+            className="w-64 sm:w-auto bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold 
+                     hover:bg-blue-700 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
+          >
+            Explore Events
+          </Link>
+
+          <Link
+            to="/login"
+            className="w-64 sm:w-auto bg-teal-600 text-white px-8 py-4 rounded-full text-lg font-semibold 
+                     hover:bg-teal-700 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
+          >
+            Login
+          </Link>
+
+          <Link
+            to="/register"
+            className="w-64 sm:w-auto bg-gray-600 text-white px-8 py-4 rounded-full text-lg font-semibold 
+                     hover:bg-gray-700 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
+          >
+            Register
+          </Link>
+        </div>
+      </div>
+
+      {/* Decorative elements */}
+      <div className="absolute top-10 left-10 w-20 h-20 bg-blue-500 rounded-full opacity-20 animate-pulse"></div>
+      <div className="absolute bottom-10 right-10 w-32 h-32 bg-teal-500 rounded-full opacity-20 animate-pulse"></div>
     </div>
   );
 };

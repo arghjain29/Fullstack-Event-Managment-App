@@ -11,47 +11,44 @@ export const SocketProvider = ({ children }) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
-    // Check if the backend is available (you can replace this with any check you prefer)
-    const checkBackendAvailability = async () => {
-      try {
-        const response = await fetch(backendUrl); // Try a simple fetch request
-        if (response.ok) {
-          return true; // Backend is available
-        }
-      } catch (error) {
-        console.error("Backend is not available", error);
-      }
-      return false; // Backend is unavailable
+    console.log("Attempting to establish socket connection...");
+
+    const establishSocketConnection = () => {
+      console.log("Forcing socket connection...");
+
+      const socketInstance = io(backendUrl, {
+        transports: ["websocket"], // Force WebSocket
+      });
+
+
+      setSocket(socketInstance);
+
+      socketInstance.on("connect", () => {
+        console.log("⚡ SOCKET CONNECTED:", socketInstance.id);
+        setIsConnected(true);
+      });
+
+      socketInstance.on("disconnect", () => {
+        console.log("⚠️ SOCKET DISCONNECTED");
+        setIsConnected(false);
+      });
+
+      // Cleanup on component unmount or when backendUrl changes
+      return () => {
+        console.log("Disconnecting socket...");
+        socketInstance.disconnect();
+      };
     };
 
-    const establishSocketConnection = async () => {
-      const isBackendAvailable = await checkBackendAvailability();
-      if (isBackendAvailable) {
-        const socketInstance = io(backendUrl);
-        setSocket(socketInstance);
+    const cleanupSocket = establishSocketConnection();
 
-        socketInstance.on("connection", () => {
-          setIsConnected(true); // Update connection status
-          console.log("Socket connected");
-        });
-
-        socketInstance.on("disconnect", () => {
-          setIsConnected(false); // Update connection status
-          console.log("Socket disconnected");
-        });
-
-        // Cleanup on component unmount
-        return () => {
-          socketInstance.disconnect();
-        };
-      } else {
-        console.log("Waiting for backend to be available...");
-      }
-    };
-
-    establishSocketConnection();
-
+    // Cleanup socket connection when component unmounts or backendUrl changes
+    return cleanupSocket;
   }, [backendUrl]);
+
+  useEffect(() => {
+    console.log("isConnected state changed:", isConnected);
+  }, [isConnected]);
 
   return (
     <SocketContext.Provider value={{ socket, isConnected }}>

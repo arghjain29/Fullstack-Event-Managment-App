@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useAuth } from './context/AuthContext';
-import { ToastContainer } from 'react-toastify';
+
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
@@ -10,42 +9,69 @@ import EventCreate from './pages/EventCreate';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import PrivateRoute from './components/PrivateRoute';
+import Profile from './pages/Profile';
 
-function App() {
-  const { user } = useAuth();
+const pageTransition = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -20 },
+  transition: { duration: 0.4, ease: "easeInOut" },
+};
+
+const Layout = () => {
+  const location = useLocation(); // Now inside Router context
 
   return (
+    <>
+      {/* Show Navbar on all pages EXCEPT HomePage */}
+      {location.pathname !== "/" && <Navbar />}
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={location.pathname}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          variants={pageTransition}
+          className={`min-h-screen flex flex-col ${location.pathname !== '/' ? 'pt-16' : ''}`}
+        >
+          <Routes location={location} key={location.pathname}>
+            {/* Public Routes */}
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/dashboard" element={<EventDashboard />} />
+
+            {/* Private Routes */}
+            <Route 
+              path="/create-event" 
+              element={
+                <PrivateRoute>
+                  <EventCreate />
+                </PrivateRoute>
+              } 
+            />
+            <Route 
+              path="/profile" 
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              } 
+            />
+          </Routes>
+        </motion.div>
+      </AnimatePresence>
+    </>
+  );
+};
+
+function App() {
+  return (
     <Router>
-      <Navbar />
-      <div className="container mx-auto p-4">
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-
-          {/* Private Routes */}
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <EventDashboard />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/create-event"
-            element={
-              <PrivateRoute>
-                <EventCreate />
-              </PrivateRoute>
-            }
-          />
-        </Routes>
+      <div className="min-h-screen overflow-y-scroll">
+      <Layout />
       </div>
-
-      {/* Toast Notifications
-      <ToastContainer /> */}
     </Router>
   );
 }

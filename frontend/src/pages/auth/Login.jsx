@@ -18,8 +18,8 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(`${backendUrl}/api/users/login`, {
-        email : LoginDetails.email,
-        password : LoginDetails.password
+        email: LoginDetails.email,
+        password: LoginDetails.password,
       });
       login(response.data.token); // Save token in global state
       navigate("/dashboard");
@@ -30,52 +30,56 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <form
-        onSubmit={handleLogin}
-        className="bg-white p-6 rounded shadow-lg w-full max-w-md"
-      >
-        <h2 className="text-2xl mb-4">Login</h2>
-        <div className="mb-4">
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            value={LoginDetails.email}
-            onChange={(e) => setLoginDetails({...LoginDetails, email: e.target.value})}
-            className="mt-1 p-2 w-full border border-gray-300 rounded"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            value={LoginDetails.password}
-            onChange={(e) => setLoginDetails({...LoginDetails, password: e.target.value})}
-            className="mt-1 p-2 w-full border border-gray-300 rounded"
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full py-2 bg-blue-600 text-white rounded"
+      <div className="flex justify-center items-center max-h-screen bg-gray-100 pt-16">
+        <form
+          onSubmit={handleLogin}
+          className="bg-white p-6 rounded shadow-lg w-full max-w-md"
         >
-          Login
-        </button>
-      </form>
-    </div>
+          <h2 className="text-2xl mb-4">Login</h2>
+          <div className="mb-4">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={LoginDetails.email}
+              onChange={(e) =>
+                setLoginDetails({ ...LoginDetails, email: e.target.value })
+              }
+              className="mt-1 p-2 w-full border border-gray-300 rounded"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={LoginDetails.password}
+              onChange={(e) =>
+                setLoginDetails({ ...LoginDetails, password: e.target.value })
+              }
+              className="mt-1 p-2 w-full border border-gray-300 rounded"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full py-2 bg-gradient-to-r from-blue-900 to-teal-700 hover:scale-95 transition-all  text-white rounded"
+          >
+            Login
+          </button>
+        </form>
+      </div>
   );
 };
 

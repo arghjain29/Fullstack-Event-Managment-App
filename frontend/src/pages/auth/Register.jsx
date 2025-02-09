@@ -2,16 +2,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "axios";
+import axios from "../../config/axios";
 
 const Register = () => {
 
   const [RegisterDetails, setRegisterDetails] = useState({
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const navigate = useNavigate();
 
    
@@ -22,7 +23,8 @@ const Register = () => {
       return;
     }
     try {
-      await axios.post(`${backendUrl}/api/users/register`, {
+      await axios.post(`/api/users/register`, {
+        username: RegisterDetails.username,
         email: RegisterDetails.email,
         password: RegisterDetails.password,
       });
@@ -34,12 +36,23 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="flex justify-center items-center  bg-gray-100 pt-16">
       <form
         onSubmit={handleRegister}
         className="bg-white p-6 rounded shadow-lg w-full max-w-md"
       >
         <h2 className="text-2xl mb-4">Register</h2>
+        <div className="mb-4">
+          <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
+          <input
+            type="text"
+            id="username"
+            value={RegisterDetails.username}
+            onChange={(e) => setRegisterDetails({...RegisterDetails, username: e.target.value})}
+            className="mt-1 p-2 w-full border border-gray-300 rounded"
+            required
+          />
+        </div>
         <div className="mb-4">
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
           <input
@@ -73,7 +86,7 @@ const Register = () => {
             required
           />
         </div>
-        <button type="submit" className="w-full py-2 bg-blue-600 text-white rounded">Register</button>
+        <button type="submit" className="w-full py-2 bg-gradient-to-r from-blue-900 to-teal-700 hover:scale-95 transition-all  text-white rounded">Register</button>
       </form>
     </div>
   );

@@ -6,6 +6,10 @@ export const createEventController = async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
+    if (!req.user._id){
+        console.log('No user found');
+        return res.status(401).json({ message: "Unauthorized" });
+    }
     try {
         const { title, description, date, location, category } = req.body;
         const newEvent = new eventModel({
@@ -100,41 +104,4 @@ export const deleteEventController = async (req, res) => {
     }
 };
 
-export const registerForEventController = async (req, res) => {
-    try {
-        const event = await eventModel.findById(req.params.id);
-        if (!event) {
-            return res.status(404).json({ message: "Event not found" });
-        }
 
-        const isAlreadyRegistered = event.attendees.some(att => att.user.toString() === req.user._id);
-        if (isAlreadyRegistered) {
-            return res.status(400).json({ message: "You are already registered for this event" });
-        }
-
-        event.attendees.push({ user: req.user._id });
-        await event.save();
-
-        res.json({ success: true, attendees: event.attendees.length });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: "Server error" });
-    }
-};
-
-export const unregisterForEventController = async (req, res) => {
-    try {
-        const event = await eventModel.findById(req.params.id);
-        if (!event) {
-            return res.status(404).json({ message: "Event not found" });
-        }
-
-        event.attendees = event.attendees.filter(att => att.user.toString() !== req.user._id);
-        await event.save();
-
-        res.json({ success: true, attendees: event.attendees.length });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: "Server error" });
-    }
-};

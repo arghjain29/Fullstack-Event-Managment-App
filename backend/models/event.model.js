@@ -6,8 +6,8 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    minLength: [3, "Name must be at least 3 characters long"],
-    maxLength: [20, "Name must be at most 20 characters long"],
+    minLength: [3, "Title must be at least 3 characters long"],
+    maxLength: [50, "Title must be at most 20 characters long"],
   },
   description: {
     type: String,
@@ -23,7 +23,7 @@ const eventSchema = new mongoose.Schema({
     required: true,
     trim: true,
     minLength: [3, "Location must be at least 3 characters long"],
-    maxLength: [20, "Location must be at most 20 characters long"],
+    maxLength: [50, "Location must be at most 50 characters long"],
   },
   category: {
     type: String,

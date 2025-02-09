@@ -6,14 +6,15 @@ import { AuthProvider } from "./context/AuthContext";
 import { SocketProvider } from "./context/SocketContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import 'remixicon/fonts/remixicon.css';
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
     <SocketProvider>
       <AuthProvider>
         <App />
         <ToastContainer />
       </AuthProvider>
     </SocketProvider>
-  </StrictMode>
+  // </StrictMode>
 );

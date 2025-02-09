@@ -6,6 +6,7 @@ import {authUser} from '../middleware/auth.middleware.js';
 const router = Router();
 
 router.post('/register',
+    body('username').isLength({ min: 3 }).withMessage('Username must be at least 3 characters long'),
     body('email').isEmail().withMessage('Invalid email'),
     body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
     userController.createUserController);
@@ -15,10 +16,5 @@ router.post('/login',
     body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
     userController.loginUserController);
 
-router.get('/profile', authUser, userController.profileController);
-
-router.get('/logout', authUser, userController.logoutController);
-
-router.get('/all', authUser ,userController.allUsersController);
 
 export default router;

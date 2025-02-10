@@ -131,7 +131,3 @@ npm run dev
 
 This project is open-source under the MIT License.
 
-## Contributors
-
-- **Argh Jain** ([@arghjain29](https://github.com/arghjain29))
-

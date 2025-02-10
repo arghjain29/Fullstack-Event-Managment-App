@@ -31,7 +31,7 @@ const AuthPage = () => {
       });
       login(response.data.token);
       navigate("/dashboard");
-      setLoginDetails({}); 
+      setLoginDetails({});
       toast.success("Login successful!");
     } catch (err) {
       toast.error("Invalid credentials. Please try again.");
@@ -59,18 +59,17 @@ const AuthPage = () => {
       setIsLogin(true);
       setRegisterDetails({});
     } catch (err) {
-      toast.error("Something went wrong. Please try again.");
+      toast.error(err.response.data.message);
     }
   };
 
   return (
-    <div className="h-[650px] flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl w-full">
         <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden">
           <div className="flex flex-col md:flex-row">
             {/* Left Panel - Login/Register Form */}
-
-            <div className="w-full md:w-1/2 p-8 relative z-10 min-h-[500px] flex flex-col justify-center">
+            <div className="w-full md:w-1/2 p-6 sm:p-8 relative z-10 flex flex-col justify-center min-h-[500px]">
               <AnimatePresence mode="wait">
                 {isLogin ? (
                   <motion.div
@@ -80,7 +79,7 @@ const AuthPage = () => {
                     exit={{ opacity: 0, x: 20 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <h2 className="text-3xl font-bold text-blue-900 mb-6">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-blue-900 mb-6 text-center">
                       Welcome Back!
                     </h2>
                     <form onSubmit={handleLogin} className="space-y-4">
@@ -142,7 +141,7 @@ const AuthPage = () => {
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <h2 className="text-3xl font-bold text-blue-900 mb-6">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-blue-900 mb-6 text-center">
                       Create Account
                     </h2>
                     <form onSubmit={handleRegister} className="space-y-4">
@@ -243,23 +242,23 @@ const AuthPage = () => {
             </div>
 
             {/* Right Panel - Welcome Message */}
-            <div className="w-full md:w-1/2 bg-gradient-to-br from-blue-900 to-teal-700 p-8 text-white flex flex-col justify-center items-center text-center">
+            <div className="w-full md:w-1/2 bg-gradient-to-br from-blue-900 to-teal-700 p-6 sm:p-8 text-white flex flex-col justify-center items-center text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <h2 className="text-4xl font-bold mb-4">
-                  {isLogin ? "New Here ?" : "Welcome Back!"}
+                <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+                  {isLogin ? "New Here?" : "Welcome Back!"}
                 </h2>
-                <p className="mb-8 text-lg">
+                <p className="mb-6 sm:mb-8 text-base sm:text-lg">
                   {isLogin
                     ? "Enter your personal details and start your journey with us"
                     : "To keep connected with us please login with your personal info"}
                 </p>
                 <button
                   onClick={() => setIsLogin(!isLogin)}
-                  className="px-8 py-3 border-2 border-white rounded-md text-white hover:bg-white hover:text-teal-700 transition-all duration-300 ease-in-out transform hover:scale-[0.98]"
+                  className="px-6 sm:px-8 py-3 border-2 border-white rounded-md text-white hover:bg-white hover:text-teal-700 transition-all duration-300 ease-in-out transform hover:scale-[0.98]"
                 >
                   {isLogin ? "Register" : "Sign In"}
                 </button>

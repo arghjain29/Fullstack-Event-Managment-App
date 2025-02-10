@@ -27,8 +27,7 @@ const ProfilePage = () => {
       const response = await axios.get("/api/events/all");
       setEvents(response.data);
     } catch (error) {
-      console.log(error);
-      toast.error("Failed to fetch events");
+      toast.error(error.message);
     }
   };
   useEffect(() => {
@@ -104,7 +103,6 @@ const ProfilePage = () => {
         closeModals();
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
   };
@@ -118,7 +116,6 @@ const ProfilePage = () => {
         closeModals();
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
   };

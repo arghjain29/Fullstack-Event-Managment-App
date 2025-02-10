@@ -25,13 +25,13 @@ const AuthPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/users/login', {
+      const response = await axios.post("/api/users/login", {
         email: loginDetails.email,
         password: loginDetails.password,
       });
       login(response.data.token);
       navigate("/dashboard");
-      setLoginDetails({}); // Clear the form
+      setLoginDetails({}); 
       toast.success("Login successful!");
     } catch (err) {
       toast.error("Invalid credentials. Please try again.");
@@ -45,14 +45,19 @@ const AuthPage = () => {
       return;
     }
     try {
-      await axios.post('/api/users/register', {
+      await axios.post("/api/users/register", {
         username: registerDetails.username,
         email: registerDetails.email,
         password: registerDetails.password,
       });
-      toast.success(<h2>Registration successful<br /> Please Log in</h2>);
+      toast.success(
+        <h2>
+          Registration successful
+          <br /> Please Log in
+        </h2>
+      );
       setIsLogin(true);
-      setRegisterDetails({}); // Clear the form
+      setRegisterDetails({});
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
     }
@@ -63,7 +68,6 @@ const AuthPage = () => {
       <div className="max-w-4xl w-full">
         <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden">
           <div className="flex flex-col md:flex-row">
-
             {/* Left Panel - Login/Register Form */}
 
             <div className="w-full md:w-1/2 p-8 relative z-10 min-h-[500px] flex flex-col justify-center">
@@ -71,35 +75,53 @@ const AuthPage = () => {
                 {isLogin ? (
                   <motion.div
                     key="login"
-                    initial={{ opacity: 0, x: -20,  }}
-                    animate={{ opacity: 1, x: 0,  }}
-                    exit={{ opacity: 0, x: 20,  }}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <h2 className="text-3xl font-bold text-blue-900 mb-6">Welcome Back!</h2>
+                    <h2 className="text-3xl font-bold text-blue-900 mb-6">
+                      Welcome Back!
+                    </h2>
                     <form onSubmit={handleLogin} className="space-y-4">
                       <div>
-                        <label htmlFor="login-email" className="block text-sm font-medium text-gray-700">
+                        <label
+                          htmlFor="login-email"
+                          className="block text-sm font-medium text-gray-700"
+                        >
                           Email
                         </label>
                         <input
                           id="login-email"
                           type="email"
                           value={loginDetails.email}
-                          onChange={(e) => setLoginDetails({ ...loginDetails, email: e.target.value })}
+                          onChange={(e) =>
+                            setLoginDetails({
+                              ...loginDetails,
+                              email: e.target.value,
+                            })
+                          }
                           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                           required
                         />
                       </div>
                       <div>
-                        <label htmlFor="login-password" className="block text-sm font-medium text-gray-700">
+                        <label
+                          htmlFor="login-password"
+                          className="block text-sm font-medium text-gray-700"
+                        >
                           Password
                         </label>
                         <input
                           id="login-password"
                           type="password"
                           value={loginDetails.password}
-                          onChange={(e) => setLoginDetails({ ...loginDetails, password: e.target.value })}
+                          onChange={(e) =>
+                            setLoginDetails({
+                              ...loginDetails,
+                              password: e.target.value,
+                            })
+                          }
                           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                           required
                         />
@@ -115,61 +137,95 @@ const AuthPage = () => {
                 ) : (
                   <motion.div
                     key="register"
-                    initial={{ opacity: 0, x: 20,  }}
-                    animate={{ opacity: 1, x: 0,  }}
-                    exit={{ opacity: 0, x: -20,  }}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <h2 className="text-3xl font-bold text-blue-900 mb-6">Create Account</h2>
+                    <h2 className="text-3xl font-bold text-blue-900 mb-6">
+                      Create Account
+                    </h2>
                     <form onSubmit={handleRegister} className="space-y-4">
                       <div>
-                        <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                        <label
+                          htmlFor="username"
+                          className="block text-sm font-medium text-gray-700"
+                        >
                           Username
                         </label>
                         <input
                           id="username"
                           type="text"
                           value={registerDetails.username}
-                          onChange={(e) => setRegisterDetails({ ...registerDetails, username: e.target.value })}
+                          onChange={(e) =>
+                            setRegisterDetails({
+                              ...registerDetails,
+                              username: e.target.value,
+                            })
+                          }
                           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                           required
                         />
                       </div>
                       <div>
-                        <label htmlFor="register-email" className="block text-sm font-medium text-gray-700">
+                        <label
+                          htmlFor="register-email"
+                          className="block text-sm font-medium text-gray-700"
+                        >
                           Email
                         </label>
                         <input
                           id="register-email"
                           type="email"
                           value={registerDetails.email}
-                          onChange={(e) => setRegisterDetails({ ...registerDetails, email: e.target.value })}
+                          onChange={(e) =>
+                            setRegisterDetails({
+                              ...registerDetails,
+                              email: e.target.value,
+                            })
+                          }
                           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                           required
                         />
                       </div>
                       <div>
-                        <label htmlFor="register-password" className="block text-sm font-medium text-gray-700">
+                        <label
+                          htmlFor="register-password"
+                          className="block text-sm font-medium text-gray-700"
+                        >
                           Password
                         </label>
                         <input
                           id="register-password"
                           type="password"
                           value={registerDetails.password}
-                          onChange={(e) => setRegisterDetails({ ...registerDetails, password: e.target.value })}
+                          onChange={(e) =>
+                            setRegisterDetails({
+                              ...registerDetails,
+                              password: e.target.value,
+                            })
+                          }
                           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                           required
                         />
                       </div>
                       <div>
-                        <label htmlFor="confirm-password" className="block text-sm font-medium text-gray-700">
+                        <label
+                          htmlFor="confirm-password"
+                          className="block text-sm font-medium text-gray-700"
+                        >
                           Confirm Password
                         </label>
                         <input
                           id="confirm-password"
                           type="password"
                           value={registerDetails.confirmPassword}
-                          onChange={(e) => setRegisterDetails({ ...registerDetails, confirmPassword: e.target.value })}
+                          onChange={(e) =>
+                            setRegisterDetails({
+                              ...registerDetails,
+                              confirmPassword: e.target.value,
+                            })
+                          }
                           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                           required
                         />

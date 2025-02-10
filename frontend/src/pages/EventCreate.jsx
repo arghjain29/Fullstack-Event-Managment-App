@@ -27,7 +27,6 @@ const EventCreate = () => {
         navigate("/dashboard");
       })
       .catch((error) => {
-        console.log(error);
         toast.error("Error creating event");
       });
   };

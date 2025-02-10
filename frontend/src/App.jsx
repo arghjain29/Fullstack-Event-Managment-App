@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -18,7 +17,7 @@ const pageTransition = {
 };
 
 const Layout = () => {
-  const location = useLocation(); // Now inside Router context
+  const location = useLocation();
 
   return (
     <>

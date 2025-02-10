@@ -18,7 +18,7 @@ export const createEventController = async (req, res) => {
             date,
             location,
             category,
-            organizer: req.user._id, // Authenticated user's ID
+            organizer: req.user._id,
         });
 
         const savedEvent = await newEvent.save();

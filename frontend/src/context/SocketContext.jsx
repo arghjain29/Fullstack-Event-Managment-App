@@ -11,31 +11,26 @@ export const SocketProvider = ({ children }) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
-    console.log("Attempting to establish socket connection...");
 
     const establishSocketConnection = () => {
-      console.log("Forcing socket connection...");
 
       const socketInstance = io(backendUrl, {
-        transports: ["websocket"], // Force WebSocket
+        transports: ["websocket"],
       });
 
 
       setSocket(socketInstance);
 
       socketInstance.on("connect", () => {
-        console.log("⚡ SOCKET CONNECTED:", socketInstance.id);
         setIsConnected(true);
       });
 
       socketInstance.on("disconnect", () => {
-        console.log("⚠️ SOCKET DISCONNECTED");
         setIsConnected(false);
       });
 
       // Cleanup on component unmount or when backendUrl changes
       return () => {
-        console.log("Disconnecting socket...");
         socketInstance.disconnect();
       };
     };
@@ -45,10 +40,6 @@ export const SocketProvider = ({ children }) => {
     // Cleanup socket connection when component unmounts or backendUrl changes
     return cleanupSocket;
   }, [backendUrl]);
-
-  useEffect(() => {
-    console.log("isConnected state changed:", isConnected);
-  }, [isConnected]);
 
   return (
     <SocketContext.Provider value={{ socket, isConnected }}>

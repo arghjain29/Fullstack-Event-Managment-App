@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, logout } = useAuth(); 
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -16,7 +16,6 @@ const Navbar = () => {
   };
 
   return (
-
     <nav className="bg-gradient-to-r from-blue-900 to-teal-700 bg-opacity-30 backdrop-blur-md shadow-md fixed top-0 w-full z-50">
       <div className="max-w-auto mx-auto px-1 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
@@ -44,7 +43,6 @@ const Navbar = () => {
                 >
                   Login
                 </Link>
-                
               </>
             ) : (
               <>
@@ -129,7 +127,6 @@ const Navbar = () => {
                 >
                   Login
                 </Link>
-              
               </>
             ) : (
               <>

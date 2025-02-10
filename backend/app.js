@@ -21,10 +21,13 @@ const io = new Server(server, {
 });
 app.use(morgan('dev'));
 
-app.use(cors({
-  origin: "*", 
-  methods: ["GET", "POST", "PUT", "DELETE"],
-}));
+const corsOptions = {
+  origin: process.env.FRONTEND_URL, 
+  optionsSuccessStatus: 200, 
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

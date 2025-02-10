@@ -11,13 +11,14 @@ export const SocketProvider = ({ children }) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
-
     const establishSocketConnection = () => {
-
       const socketInstance = io(backendUrl, {
-        transports: ["websocket"],
+        transports: ["websocket", "polling"], // Allow polling as a fallback
+        reconnection: true,
+        reconnectionAttempts: 5,
+        reconnectionDelay: 1000,
+        withCredentials: true,
       });
-
 
       setSocket(socketInstance);
 

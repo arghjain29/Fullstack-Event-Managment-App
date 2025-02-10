@@ -6,7 +6,7 @@ const PrivateRoute = ({ children }) => {
   const { user } = useAuth(); // Access user state from AuthContext
 
   // If the user is authenticated, render the children; otherwise, redirect to login
-  return user ? children : <Navigate to="/login" replace />;
+  return user ? children : <Navigate to="/auth" replace />;
 };
 
 export default PrivateRoute;

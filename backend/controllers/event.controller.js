@@ -78,7 +78,7 @@ export const updateEventController = async (req, res) => {
         event.category = category || event.category;
 
         const updatedEvent = await event.save();
-        res.json(updatedEvent);
+        res.status(200).json(updatedEvent);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server error" });
@@ -97,7 +97,7 @@ export const deleteEventController = async (req, res) => {
         }
 
         await event.deleteOne();
-        res.json({ message: "Event deleted successfully" });
+        res.status(200).json({ message: "Event deleted successfully" });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server error" });

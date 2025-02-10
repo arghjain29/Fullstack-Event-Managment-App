@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -5,6 +6,7 @@ import { toast } from "react-toastify";
 import axios from "../config/axios";
 import { useSocket } from "../context/SocketContext";
 import { useAuth } from "../context/AuthContext";
+import { Calendar, MapPinned } from "lucide-react";
 
 const EventDashboard = () => {
   const [events, setEvents] = useState([]);
@@ -16,6 +18,7 @@ const EventDashboard = () => {
   const { socket } = useSocket();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const [notAvailable, setnotAvailable] = useState(false);
 
   useEffect(() => {
     fetchEvents();
@@ -57,10 +60,13 @@ const EventDashboard = () => {
 
   const filterEvents = () => {
     let filtered = [...events];
+    let count = 0;
     if (selectedCategory) {
       filtered = filtered.filter(
         (event) => event.category === selectedCategory
       );
+      count = count + 1;
+      setnotAvailable(false);
     }
     if (dateFilter) {
       const today = new Date();
@@ -69,7 +75,13 @@ const EventDashboard = () => {
       } else if (dateFilter === "past") {
         filtered = filtered.filter((event) => new Date(event.date) <= today);
       }
+      count = count + 1;
+      setnotAvailable(false);
     }
+    if (filtered.length === 0 && count > 0) {
+      setnotAvailable(true);
+    }
+    filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
     setFilteredEvents(filtered);
   };
 
@@ -104,7 +116,12 @@ const EventDashboard = () => {
   const handleCreateEvent = () => {
     navigate("/create-event");
   };
-  const eventList = filteredEvents.length !== 0 ? filteredEvents : events;
+
+  const eventList = notAvailable
+    ? []
+    : filteredEvents.length === 0
+    ? events
+    : filteredEvents;
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-4xl font-bold text-blue-900 mb-8">Event Dashboard</h2>
@@ -148,40 +165,57 @@ const EventDashboard = () => {
         <div className="text-center text-xl text-gray-600">
           Loading events...
         </div>
+      ) : eventList.length === 0 ? (
+        <div className="text-center text-xl text-gray-600">
+          No events Available.
+        </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 cursor-pointer lg:grid-cols-3 gap-6">
           {eventList.map((event) => (
             <div
               key={event._id}
               className="bg-teal-50 m-5 rounded-lg shadow-md overflow-hidden transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-teal-600 hover:bg-opacity-20 hover:shadow-xl"
             >
               <div className="p-6">
-                <h3 className="text-2xl font-bold text-blue-900 mb-2">
-                  {event.title}
-                </h3>
-                <p className="text-gray-600 text-justify mb-4">
-                  {event.description}
-                </p>
-                <p className="text-sm text-gray-500 mb-2">
-                  <i className="ri-calendar-line"></i>{" "}
-                  {new Date(event.date).toLocaleDateString("en-US", {
-                    month: "long",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                </p>
                 <div className="flex justify-between">
-                  <p className="text-sm bg-teal-900 inline-block p-1 rounded-md text-gray-100 mb-4">
-                    Category: {event.category}
-                  </p>
+                  <h3 className="text-2xl font-bold text-blue-900 mb-2">
+                    {event.title.toUpperCase()}
+                  </h3>
+                  <div>
                   {new Date(event.date) <= new Date() && (
-                    <p className="text-sm bg-red-700 inline-block p-1 rounded-md text-gray-100 mb-4">
+                    <p className="text-sm bg-red-700 inline-block p-1 px-2 rounded-lg text-gray-100 mb-4">
                       Expired
                     </p>
                   )}
+                  </div>
                 </div>
-                <p className="text-sm font-semibold text-blue-600 mb-4">
-                  Attendees: {event.attendees.length || 0}
+                <p
+                  style={{ fontStyle: "italic" }}
+                  className="text-gray-600 text-justify mb-4"
+                >
+                  {event.description}
+                </p>
+                <div className="flex justify-between">
+                  <p className="text-sm text-gray-700 mb-2 flex items-center space-x-2">
+                    <Calendar size={16} className="inline-block mr-2" />
+                    {new Date(event.date).toLocaleDateString("en-US", {
+                      month: "long",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </p>
+                  <p className="text-sm font-semibold text-gray-700 mb-2 flex items-center space-x-2">
+                    <MapPinned size={16} className="inline-block mr-2" />
+                    {event.location}
+                  </p>
+                </div>
+
+                <p className="text-sm bg-teal-800 inline-block p-1 px-2 rounded-md text-gray-100 mb-4">
+                  Category: {event.category}
+                </p>
+
+                <p className="text-sm font-semibold text-blue-700 mb-4">
+                  No. of Attendees: {event.attendees.length || 0}
                 </p>
                 {user && (
                   <div className="flex justify-between">

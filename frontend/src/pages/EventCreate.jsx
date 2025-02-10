@@ -34,8 +34,8 @@ const EventCreate = () => {
 
   return (
     <div className="w-full flex justify-center items-center">
-      <div className="w-96 bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-3xl font-semibold mb-4">Create New Event</h2>
+      <div className="w-[690px] hover:bg-teal-50 mt-2 rounded-xl p-6 shadow-md transition-all duration-300 hover:shadow-xl">
+        <h2 className="text-4xl text-blue-900 font-semibold mb-4 text-center">Create New Event</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block">Title</label>
@@ -86,7 +86,7 @@ const EventCreate = () => {
               name="category"
               value={formData.category}
               onChange={handleChange}
-              className="border p-2 w-full"
+              className="border p-2 w-full mb-2"
               required
             >
               <option value="Conference">Conference</option>
@@ -98,7 +98,7 @@ const EventCreate = () => {
           </div>
           <button
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4"
+            className="bg-teal-600 hover:bg-teal-700 transition-all ease-in-out duration-300 text-white px-4 py-2 rounded-md mt-4"
           >
             Create Event
           </button>

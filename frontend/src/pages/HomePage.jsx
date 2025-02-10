@@ -39,26 +39,10 @@ const HomePage = () => {
         >
           <Link
             to="/dashboard"
-            className="w-64 sm:w-auto bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold 
-                     hover:bg-blue-700 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
-          >
-            Explore Events
-          </Link>
-
-          <Link
-            to="/login"
             className="w-64 sm:w-auto bg-teal-600 text-white px-8 py-4 rounded-full text-lg font-semibold 
                      hover:bg-teal-700 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
           >
-            Login
-          </Link>
-
-          <Link
-            to="/register"
-            className="w-64 sm:w-auto bg-gray-600 text-white px-8 py-4 rounded-full text-lg font-semibold 
-                     hover:bg-gray-700 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
-          >
-            Register
+            Explore Events
           </Link>
         </div>
       </div>

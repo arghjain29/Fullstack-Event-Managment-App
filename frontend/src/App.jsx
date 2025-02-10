@@ -6,10 +6,9 @@ import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import EventDashboard from './pages/EventDashboard';
 import EventCreate from './pages/EventCreate';
-import Login from './pages/auth/Login';
-import Register from './pages/auth/Register';
 import PrivateRoute from './components/PrivateRoute';
 import Profile from './pages/Profile';
+import AuthPage from './pages/AuthPage';
 
 const pageTransition = {
   initial: { opacity: 0, y: 20 },
@@ -38,8 +37,7 @@ const Layout = () => {
           <Routes location={location} key={location.pathname}>
             {/* Public Routes */}
             <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/auth" element={<AuthPage />} />
             <Route path="/dashboard" element={<EventDashboard />} />
 
             {/* Private Routes */}

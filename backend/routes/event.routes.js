@@ -11,19 +11,6 @@ export default (io) => {
     router.get('/all', EventController.getAllEventsController)
     router.get('/:id', EventController.getSingleEventController)
 
-    // router.post('/:id/register', authUser, async (req, res) => {
-    //     try {
-    //         await EventController.registerForEventController(req, res);
-    //         console.log(response);
-    //         if (response.status === 200) {
-    //             io.emit("attendeeUpdated", { eventId: req.params.id, attendees: response.attendees });
-    //             console.log("Attendee updated");
-    //         }
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // });
-
     router.post('/:id/register', authUser, async (req, res) => {
         try {
             const event = await eventModel.findById(req.params.id);
@@ -77,9 +64,6 @@ export default (io) => {
         }
     });
     
-
-
-
 
     router.post('/create', authUser, [
         body("title").notEmpty().withMessage("Title is required"),

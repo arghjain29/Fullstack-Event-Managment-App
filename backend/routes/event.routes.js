@@ -27,7 +27,7 @@ export default (io) => {
             await event.save();
     
             // Emit event update after successful registration
-            io.emit("attendeeUpdated", { eventId: req.params.id, attendees: event.attendees });
+            io.emit("attendeeUpdated", { eventId: req.params.id, attendees: event.attendees, eventTitle: event.title });
             console.log("Attendee updated");
     
             return res.status(200).json({ success: true, attendees: event.attendees});
@@ -54,7 +54,7 @@ export default (io) => {
             await event.save();
     
             // Emit WebSocket event
-            io.emit("attendeeUpdated", { eventId: req.params.id, attendees: event.attendees });
+            io.emit("attendeeUpdated", { eventId: req.params.id, attendees: event.attendees, eventTitle: event.title });
             console.log("Attendee updated");
     
             return res.status(200).json({ success: true, attendees: event.attendees});

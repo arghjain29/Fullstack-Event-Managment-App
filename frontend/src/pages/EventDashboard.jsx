@@ -27,12 +27,16 @@ const EventDashboard = () => {
   useEffect(() => {
     if (!socket) return;
 
-    const handleAttendeeUpdate = ({ eventId, attendees }) => {
+    const handleAttendeeUpdate = ({ eventId, attendees, eventTitle }) => {
       setEvents((prevEvents) =>
         prevEvents.map((event) =>
           event._id === eventId ? { ...event, attendees } : event
         )
       );
+      toast.info(<div>
+        <p className="text-lg font-medium text-blue-900">Attendee list updated for</p>
+        <p className="text-lg font-semibold text-blue-900">{eventTitle}</p>
+      </div>);
     };
 
     socket.on("attendeeUpdated", handleAttendeeUpdate);
